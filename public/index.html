@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Lantern Keepers</title>
+  <meta name="description" content="A real-time multiplayer party game of light, words, and deception. Join by room code from your own device." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+  <canvas id="bg-canvas"></canvas>
+
+  <div id="app">
+
+    <!-- LANDING -->
+    <section id="screen-landing" class="screen">
+      <div class="landing-glow"></div>
+      <div class="lantern-logo">
+        <canvas id="logo-flame"></canvas>
+      </div>
+      <h1 class="title">Lantern<span> Keepers</span></h1>
+      <p class="tagline">Keep the Last Lantern lit through the long dark.<br />One of you wants it to go out.</p>
+
+      <div class="card join-card">
+        <input id="name-input" class="input" placeholder="Your name" maxlength="16" autocomplete="off" />
+        <button id="btn-create" class="btn btn-primary">Create a room</button>
+        <div class="divider"><span>or</span></div>
+        <div class="join-row">
+          <input id="code-input" class="input input-code" placeholder="CODE" maxlength="4" autocomplete="off" />
+          <button id="btn-join" class="btn">Join</button>
+        </div>
+      </div>
+
+      <button id="btn-rules" class="btn-link">How to play</button>
+    </section>
+
+    <!-- LOBBY -->
+    <section id="screen-lobby" class="screen hidden">
+      <div class="lobby-code-wrap">
+        <p class="lobby-label">Room code</p>
+        <div id="lobby-code" class="lobby-code">----</div>
+        <button id="btn-copy" class="btn-link">copy link</button>
+      </div>
+      <p class="lobby-hint" id="lobby-hint">Share this code (or the link) with your friends. You need at least 2 to begin.</p>
+      <div class="card">
+        <h3>Keepers gathered <span id="lobby-count" class="muted"></span></h3>
+        <ul id="lobby-players" class="player-list"></ul>
+        <button id="btn-start" class="btn btn-primary btn-big">Light the first flame</button>
+      </div>
+      <button id="btn-lobby-rules" class="btn-link">How to play</button>
+      <button id="btn-leave-lobby" class="btn-link danger-link">Leave room</button>
+    </section>
+
+    <!-- GAME -->
+    <section id="screen-game" class="screen hidden">
+      <header class="game-header">
+        <div class="watch-info">Watch <span id="watch-num">0</span>/<span id="watch-max">5</span></div>
+        <div class="room-code-small" title="Room code">Room <span id="game-code">----</span></div>
+        <div class="phase-timer" id="phase-timer"></div>
+      </header>
+
+      <div class="lantern-stage">
+        <div class="lantern-body">
+          <canvas id="flame-canvas"></canvas>
+        </div>
+        <div class="flame-meter-wrap">
+          <div class="flame-meter"><div id="flame-bar" class="flame-bar"></div></div>
+          <div class="flame-label">Flame <span id="flame-val">100</span>%</div>
+        </div>
+      </div>
+
+      <div id="role-banner" class="role-banner hidden"></div>
+
+      <div id="phase-panel" class="phase-panel"></div>
+
+      <div class="players-panel">
+        <h4>Keepers</h4>
+        <div id="players-list" class="players-list"></div>
+      </div>
+    </section>
+  </div>
+
+  <!-- RULES MODAL -->
+  <div id="rules-modal" class="modal hidden">
+    <div class="modal-card">
+      <button id="btn-close-rules" class="modal-close" aria-label="Close">×</button>
+      <h2>How to play Lantern Keepers</h2>
+      <div class="rules-scroll">
+        <p><strong>The story.</strong> You and your friends are keepers of the Last Lantern, the only light holding back a spreading dark. A Night is made of five Watches (rounds). The flame drops a little each Watch. Keep it burning until dawn.</p>
+        <p><strong>The twist.</strong> One or two of you are secretly <em>Shadows</em> — touched by the dark, working to snuff the flame out without being caught. Everyone else is a <em>Keeper</em>.</p>
+        <p><strong>Each Watch:</strong></p>
+        <ol>
+          <li><strong>The Riddle.</strong> A hidden category appears. Keepers see it clearly. Shadows only see a vague hint — they must bluff.</li>
+          <li><strong>Sparks.</strong> Everyone secretly types one word that fits the category (a "spark"). Sparks are hidden until the reveal.</li>
+          <li><strong>The Reveal.</strong> All sparks appear together, anonymously and shuffled.</li>
+          <li><strong>Lighting.</strong> You have 2 lights. Place them on sparks you think are genuine — lighting a real spark brightens the flame. But lighting a Shadow's dark spark dims it.</li>
+          <li><strong>Suspicion.</strong> Cast one suspicion on the spark you think the Shadow wrote. If enough of you agree and you're right, that Shadow is <em>exposed</em> and the flame surges. Accuse a true Keeper and the flame dips.</li>
+        </ol>
+        <p><strong>Winning.</strong> If the flame survives all five Watches, dawn breaks — Keepers win. If it hits zero, the dark wins and Shadows triumph. The top scorer is crowned Best Keeper either way.</p>
+        <p class="muted">2 players: a friendly cooperative watch — no Shadows, just keep the flame lit together.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div id="toast" class="toast hidden"></div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/js/flame.js"></script>
+  <script src="/js/app.js"></script>
+</body>
+</html>

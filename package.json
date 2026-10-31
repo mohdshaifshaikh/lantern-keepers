@@ -1,0 +1,19 @@
+{
+  "name": "lantern-keepers",
+  "version": "1.0.0",
+  "description": "Lantern Keepers — a real-time multiplayer party game of light, words, and deception. 2-8 players join by room code from separate devices.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "localtunnel": "^2.0.2",
+    "socket.io": "^4.7.5",
+    "socket.io-client": "^4.7.5"
+  }
+}
